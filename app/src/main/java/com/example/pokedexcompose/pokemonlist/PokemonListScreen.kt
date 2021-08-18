@@ -36,6 +36,7 @@ import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
+import coil.transform.CircleCropTransformation
 import com.example.pokedexcompose.R
 import com.example.pokedexcompose.data.models.PokedexListEntry
 import com.example.pokedexcompose.ui.theme.RobotoCondensed
@@ -172,44 +173,16 @@ fun PokedexEntry(
             }
     ){
         Column {
-//            Image(
-//                request = ImageRequest.Builder(LocalContext.current)
-//                    .data(entry.imageUrl)
-//                    .target{
-//                        viewModel.calcDominantColor(it){ color ->
-//                            dominantColor = color
-//                        }
-//                    }.build(),
-//                contentDescription = entry.pokemonName,
-//                fadeIn = true,
-//                modifier = Modifier
-//                    .size(120.dp)
-//                    .align(CenterHorizontally)
-//            ) {
-////                CircularProgressIndicator(
-////                    color = MaterialTheme.colors.primary,
-////                    modifier = Modifier.scale(0.5f)
-////                )
-//            }
-
             Image(
-                painter = rememberImagePainter(request =
-                    ImageRequest.Builder(LocalContext.current)
-                        .data(entry.imageUrl)
-                        .crossfade(true)
-                        .target {
-                            viewModel.calcDominantColor(it){ color ->
-                                dominantColor = color
-                            }
-                        }
-                        .build()),
+                painter = rememberImagePainter(
+                    data = entry.imageUrl,
+                    builder = { crossfade(true) }
+                ),
                 contentDescription = entry.pokemonName,
                 modifier = Modifier
                     .size(120.dp)
                     .align(CenterHorizontally)
             )
-
-
 
             Text(
                 text = entry.pokemonName,
